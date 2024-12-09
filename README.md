@@ -1,4 +1,4 @@
-# Nuked SC-55 CLAP audio plugin
+#Nuked SC - 55 CLAP audio plugin
 
 The plugin is built upon [J.C. Moyer's fork](https://github.com/jcmoyer/Nuked-SC55)
 of nukeykt's original [Nuked SC-55](https://github.com/nukeykt/Nuked-SC55)
@@ -14,21 +14,39 @@ Roland SC-55 emulation hardware boxes. Moreover, any use of the software in
 commercial music production is prohibited.
 
 
-## Usage
+## Installation
 
-TODO
+Download the latest version for your operating system from the [releases
+page](/releases) page, then unzip it into one of these OS-specific locations:
 
-## ROM files
+- **Windows**
+  - `C:\Program Files\Common Files\CLAP\`
+  - `$LOCALAPPDATA/Programs/CLAP`
 
-Create a `NukedSC55-Resources` directory in the folder where the CLAP plugin
-resides, then a `ROMs` folder in it. The ROM files necessary for emulating the
-individual models need to placed in subfolders with specific names (e.g.,
-`SC-55-v1.20`).
+- **macOS**
+  - `/Library/Audio/Plug-Ins/CLAP/`
+  - `$HOME/Library/Audio/Plug-Ins/CLAP/`
+
+- **Linux**
+  - `/usr/lib/clap`
+  - `$HOME/.clap`
+
+
+### ROM files
+
+The emulation needs dumps of the ROM chips of the original hardware to
+function. If any of the ROM files for a given model are not present or
+they're invalid, you won't be able to load the plugin for that particular model.
+
+To install the ROM files, create a `Nuked-SC55-Resources` directory in the
+folder where the CLAP plugin resides, then a `ROMs` folder in it. The ROM
+files necessary for emulating the different models must be placed in
+subfolders with specific names (e.g., `SC-55-v1.20`).
 
 This is how the folder structure should look like:
 
 ```
-NukedSC55-Resources
+Nuked-SC55-Resources
   ROMs
     SC-55-v1.20
       sc55_rom1.bin
@@ -48,10 +66,10 @@ NukedSC55-Resources
 ```
 
 On macOS, you can also put the `ROMs` folder in the `Resources` folder inside
-the application bundle.
+the `Nuked-SC55.clap` application bundle.
 
-Here are the required files and their SHA256 hashes per model. Lookup is
-performed by filename, so make sure the names match exactly.
+Here is the list of required files for each supported model and their SHA256
+hashes. Lookup is performed by filename, so make sure the names match exactly.
 
 ```
 SC-55-v2.00/sc55_rom1.bin        76f646bc03f66dbee7606f2181d4ea76f05ece7d
