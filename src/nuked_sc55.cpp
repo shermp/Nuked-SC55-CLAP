@@ -50,7 +50,7 @@ static void log_shutdown() {}
 
 //----------------------------------------------------------------------------
 
-extern const char* plugin_path;
+extern std::string plugin_path;
 
 NukedSc55::NukedSc55(const clap_plugin_t _plugin_class,
                      const clap_host_t* _host, const Model _model)

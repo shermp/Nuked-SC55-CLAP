@@ -1,4 +1,5 @@
 #include <cassert>
+#include <string>
 
 #include "nuked_sc55.h"
 
@@ -401,13 +402,13 @@ static const clap_plugin_factory_t plugin_factory = {
 // Dynamic library definition
 //////////////////////////////////////////////////////////////////////////////
 
-const char* plugin_path = nullptr;
+std::string plugin_path = {};
 
 extern "C" const clap_plugin_entry_t clap_entry = {
     .clap_version = CLAP_VERSION_INIT,
 
     .init = [](const char* _plugin_path) -> bool {
-        plugin_path = _plugin_path;
+        plugin_path = std::string(_plugin_path);
         return true;
     },
 
