@@ -28,8 +28,8 @@ page](/releases) page, then unzip it into one of these OS-specific locations:
   - `$HOME/Library/Audio/Plug-Ins/CLAP/`
 
 - **Linux**
-  - `/usr/lib/clap`
-  - `$HOME/.clap`
+  - `/usr/lib/clap/`
+  - `$HOME/.clap/`
 
 
 ### ROM files
