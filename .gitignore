@@ -41,4 +41,6 @@ GTAGS
 compile_commands.json
 
 *.wav
-*.out
+
+# Universal app bundle output (macOS)
+out
