@@ -13,13 +13,6 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules/")
 
 set(VCPKG_LIBRARY_LINKAGE static)
 
-if(CMAKE_SYSTEM_NAME STREQUAL "Windows")
-    # TODO
-
-else ()
-    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
-endif ()
-
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # TODO
@@ -39,10 +32,18 @@ add_library(Nuked-SC55-CLAP MODULE
     src/plugin.cpp
 )
 
+set_target_properties(Nuked-SC55-CLAP PROPERTIES OUTPUT_NAME Nuked-SC55)
+
+set_property(
+	TARGET Nuked-SC55-CLAP
+	APPEND
+	PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/Nuked-SC55.clap
+)
+
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     #    target_link_options(Nuked-SC55-CLAP PRIVATE /EXPORT:clap_entry)
+
     set_target_properties(Nuked-SC55-CLAP PROPERTIES
-        OUTPUT_NAME Nuked-SC55
         SUFFIX ".clap"
         PDB_NAME Nuked-SC55-CLAP)
 
@@ -51,15 +52,15 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     #)
 
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
+    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
+
     set_target_properties(Nuked-SC55-CLAP PROPERTIES
         BUNDLE ON
         BUNDLE_EXTENSION clap
 
-        OUTPUT_NAME Nuked-SC55
-
         CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Nuked-SC55.clap
 
-        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/src/plugin.plist.in
+        MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/resources/macos/plugin.plist.in
 
         MACOSX_BUNDLE_GUI_IDENTIFIER        net.johnnovak.nuked_sc55_clap
         MACOSX_BUNDLE_BUNDLE_NAME           "Nuked-SC55-CLAP"
@@ -77,16 +78,18 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/Nuked-SC55.clap" "~/Library/Audio/Plug-Ins/CLAP/Nuked-SC55.clap"
     )
 
-    set_property(
-        TARGET Nuked-SC55-CLAP
-        APPEND
-        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/Nuked-SC55.clap
-    )
-
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plug.version)
+    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
+
+    target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plugin.version)
     target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,-z,defs)
-    set_target_properties(Nuked-SC55-CLAP PROPERTIES SUFFIX ".clap" PREFIX "")
+
+    set_target_properties(Nuked-SC55-CLAP PROPERTIES
+		SUFFIX ".clap"
+		PREFIX "")
+
+    # strip debug info
+    set(CMAKE_EXE_LINKER_FLAGS "-s")
 
 endif ()
 

@@ -1,4 +1,5 @@
 #include <cassert>
+#include <cstring>
 #include <string>
 
 #include "nuked_sc55.h"

@@ -395,7 +395,9 @@ void NukedSc55::ProcessEvent(const clap_event_header_t* event)
             emu->PostMIDI(midi_event->data[1]);
 
             // 3-byte messages
-            switch (const auto status = midi_event->data[0] & 0xf0) {
+            const auto status = midi_event->data[0] & 0xf0;
+
+            switch (status) {
             case NoteOff:
             case NoteOn:
             case PolyKeyPressure:

@@ -142,7 +142,7 @@ enviroment variable accordingly.
 
 First you need to configure the project:
 
-    cmake -G "Visual Studio 17 2022" --preset=default
+    cmake -G "Visual Studio 17 2022" --preset=ninja
 
 To build the **debug artifacts** (this will create the 'Nuked-SC55.clap`
 plugin in `build\Debug`):
@@ -166,12 +166,12 @@ directory, or follow the below manual steps.
 
 First you need to configure the project:
 
-    cmake --preset=default
+    cmake --preset=ninja
 
 Use these invocations if you want to cross-compile:
 
-    cmake --preset=default -DCMAKE_OSX_ARCHITECTURES=arm64
-    cmake --preset=default -DCMAKE_OSX_ARCHITECTURES=x86_64
+    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64
+    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64
 
 To build the project:
 
@@ -184,7 +184,7 @@ This will create the `Nuked-SC55.clap` app bundle in the `build` directory.
 
 First you need to configure the project:
 
-    cmake --preset=default
+    cmake --preset=ninja
 
 To build the project (the output will be in the `build` directory):
 
