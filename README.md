@@ -17,7 +17,7 @@ commercial music production is prohibited.
 ## Installation
 
 Download the latest version for your operating system from the [releases
-page](/releases) page, then unzip it into one of these OS-specific locations:
+page](https://github.com/johnnovak/Nuked-SC55-CLAP/releases/) page, then unzip it into one of these OS-specific locations:
 
 - **Windows**
   - `C:\Program Files\Common Files\CLAP\`
