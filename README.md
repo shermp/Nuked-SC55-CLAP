@@ -36,12 +36,15 @@ page](/releases) page, then unzip it into one of these OS-specific locations:
 
 The emulation needs dumps of the ROM chips of the original hardware to
 function. If any of the ROM files for a given model are not present or they're
-invalid, you won't be able to load the plugin for that particular model.
+invalid, you won't be able to load the plugin for that particular model. It's
+the easiest to grab the ROM files from
+[here](https://archive.org/details/nuked-sc-55-clap-rom-files), but here are
+the instructions how to set them up if you're getting them from elsewhere.
 
-To install the ROM files, create a `Nuked-SC55-Resources` directory in the
-folder where the CLAP plugin resides, then a `ROMs` folder in it. The ROM
-files necessary for emulating the different models must be placed in
-subfolders with specific names (e.g., `SC-55-v1.20`).
+Create a `Nuked-SC55-Resources` directory in the folder where the CLAP plugin
+resides, then a `ROMs` folder in it. You'll need to create subfolders in the
+`ROMs` folder for the different models with specific names (e.g.,
+`SC-55-v1.20`).
 
 This is how the folder structure should look like:
 
