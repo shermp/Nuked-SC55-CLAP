@@ -35,8 +35,8 @@ page](/releases) page, then unzip it into one of these OS-specific locations:
 ### ROM files
 
 The emulation needs dumps of the ROM chips of the original hardware to
-function. If any of the ROM files for a given model are not present or
-they're invalid, you won't be able to load the plugin for that particular model.
+function. If any of the ROM files for a given model are not present or they're
+invalid, you won't be able to load the plugin for that particular model.
 
 To install the ROM files, create a `Nuked-SC55-Resources` directory in the
 folder where the CLAP plugin resides, then a `ROMs` folder in it. The ROM
@@ -142,7 +142,8 @@ First you need to configure the project:
     cmake -G "Visual Studio 17 2022" --preset=default
 
 
-To build the **debug artifacts** (output will be in the `build/Debug` subdirectory):
+To build the **debug artifacts** (output will be in the `build/Debug`
+subdirectory):
 
     cmake --build build --config Debug
 
@@ -151,19 +152,44 @@ Or just:
     cmake --build build
 
 
-To build the **release artifacts** (output will be in the `build/Release` subdirectory):
+To build the **release artifacts** (output will be in the `build/Release`
+subdirectory):
 
     cmake --build build --config Release
 
 
-#### macOS & Linux
+#### macOS
+
+Run `build-macos.sh` to build the universal binary app bundle in the `out`
+directory, or follow the below manual steps.
 
 First you need to configure the project:
 
     cmake --preset=default
 
 
-To build the project (output will be in the `build/` subdirectory):
+Use these invocations if you want to cross-compile:
+
+    cmake --preset=default -DCMAKE_OSX_ARCHITECTURES=arm64
+    cmake --preset=default -DCMAKE_OSX_ARCHITECTURES=x86_64
+
+
+To build the project:
+
+    cmake --build build
+
+This will create the `Nuked-SC55.clap` app bundle in the `build` directory.
+
+
+
+#### Linux
+
+First you need to configure the project:
+
+    cmake --preset=default
+
+
+To build the project (the output will be in the `build` subdirectory):
 
     cmake --build build
 
