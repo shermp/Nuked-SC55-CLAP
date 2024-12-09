@@ -77,6 +77,12 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/NukedSC55.clap" "~/Library/Audio/Plug-Ins/CLAP/NukedSC55.clap"
     )
 
+    set_property(
+        TARGET NukedSc55Clap
+        APPEND
+        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/NukedSC55.clap
+    )
+
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     target_link_libraries(NukedSc55Clap PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plug.version)
     target_link_libraries(NukedSc55Clap PRIVATE -Wl,-z,defs)
