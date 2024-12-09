@@ -145,8 +145,8 @@ First you need to configure the project:
     cmake -G "Visual Studio 17 2022" --preset=default
 
 
-To build the **debug artifacts** (output will be in the `build/Debug`
-subdirectory):
+To build the **debug artifacts** (this will create the 'Nuked-SC55.clap`
+plugin in `build\Debug`):
 
     cmake --build build --config Debug
 
@@ -155,8 +155,8 @@ Or just:
     cmake --build build
 
 
-To build the **release artifacts** (output will be in the `build/Release`
-subdirectory):
+To build the **release artifacts** (this will create the 'Nuked-SC55.clap`
+plugin in `build\Release`):
 
     cmake --build build --config Release
 
@@ -183,8 +183,6 @@ To build the project:
 
 This will create the `Nuked-SC55.clap` app bundle in the `build` directory.
 
-
-
 #### Linux
 
 First you need to configure the project:
@@ -192,7 +190,7 @@ First you need to configure the project:
     cmake --preset=default
 
 
-To build the project (the output will be in the `build` subdirectory):
+To build the project (the output will be in the `build` directory):
 
     cmake --build build
 
