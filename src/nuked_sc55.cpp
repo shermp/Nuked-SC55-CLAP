@@ -88,7 +88,7 @@ std::filesystem::path NukedSc55::GetRomBasePath()
         return bundle_rom_path;
     }
 #endif
-    const char* resources_dir = "NukedSC55-Resources";
+    const char* resources_dir = "Nuked-SC55-Resources";
 
     const auto rom_path = path.parent_path() / resources_dir / rom_dir;
     log("ROM base path: %s", rom_path.c_str());

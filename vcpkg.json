@@ -1,6 +1,6 @@
 {
   "$schema": "https://raw.githubusercontent.com/microsoft/vcpkg-tool/main/docs/vcpkg.schema.json",
-  "name": "nuke-sc55-clap",
+  "name": "nuked-sc55-clap",
   "description": "Nuked SC-55 CLAP plugin",
   "version": "0.1.0",
 

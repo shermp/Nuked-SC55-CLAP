@@ -1,6 +1,6 @@
 cmake_minimum_required(VERSION 3.27)
 
-project(NukedSc55Clap
+project(Nuked-SC55-CLAP
     VERSION     0.1.0
     DESCRIPTION "Nuked SC-55 CLAP audio plugin"
     LANGUAGES   CXX
@@ -25,7 +25,7 @@ include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 # TODO
 #configure_file(config.h.in config.h)
 
-add_library(NukedSc55Clap MODULE
+add_library(Nuked-SC55-CLAP MODULE
     src/nuked-sc55/emu.cpp
     src/nuked-sc55/lcd.cpp
     src/nuked-sc55/mcu.cpp
@@ -40,57 +40,57 @@ add_library(NukedSc55Clap MODULE
 )
 
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
-	#    target_link_options(NukedSc55Clap PRIVATE /EXPORT:clap_entry)
-	set_target_properties(NukedSc55Clap PROPERTIES
-		OUTPUT_NAME NukedSC55
-		SUFFIX ".clap"
-		PDB_NAME NukedSC55_clap)
+    #    target_link_options(Nuked-SC55-CLAP PRIVATE /EXPORT:clap_entry)
+    set_target_properties(Nuked-SC55-CLAP PROPERTIES
+        OUTPUT_NAME Nuked-SC55
+        SUFFIX ".clap"
+        PDB_NAME Nuked-SC55-CLAP)
 
     #add_compile_options(
     #    /FI ${CMAKE_SOURCE_DIR}/example/config.h
     #)
 
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    set_target_properties(NukedSc55Clap PROPERTIES
+    set_target_properties(Nuked-SC55-CLAP PROPERTIES
         BUNDLE ON
         BUNDLE_EXTENSION clap
 
-        OUTPUT_NAME NukedSC55
+        OUTPUT_NAME Nuked-SC55
 
-        CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/NukedSC55.clap
+        CMAKE_ARCHIVE_OUTPUT_DIRECTORY ${CMAKE_BINARY_DIR}/Nuked-SC55.clap
 
         MACOSX_BUNDLE_INFO_PLIST ${CMAKE_CURRENT_SOURCE_DIR}/src/plugin.plist.in
 
-        MACOSX_BUNDLE_GUI_IDENTIFIER        net.johnnovak.nuked_sc55
-        MACOSX_BUNDLE_BUNDLE_NAME           "Nuked SC-55"
+        MACOSX_BUNDLE_GUI_IDENTIFIER        net.johnnovak.nuked_sc55_clap
+        MACOSX_BUNDLE_BUNDLE_NAME           "Nuked-SC55-CLAP"
         MACOSX_BUNDLE_BUNDLE_VERSION        "${PROJECT_VERSION}"
         MACOSX_BUNDLE_SHORT_VERSION_STRING  "${PROJECT_VERSION}"
         MACOSX_BUNDLE_LONG_VERSION_STRING   "${PROJECT_VERSION}"
         MACOSX_BUNDLE_COPYRIGHT             "John Novak"
     )
 
-    file(TOUCH_NOCREATE ${CMAKE_BINARY_DIR}/NukedSC55.clap/Contents/PkgInfo)
-    file(WRITE          ${CMAKE_BINARY_DIR}/NukedSC55.clap/Contents/PkgInfo "BNDL????")
+    file(TOUCH_NOCREATE ${CMAKE_BINARY_DIR}/Nuked-SC55.clap/Contents/PkgInfo)
+    file(WRITE          ${CMAKE_BINARY_DIR}/Nuked-SC55.clap/Contents/PkgInfo "BNDL????")
 
-    add_custom_command(TARGET NukedSc55Clap POST_BUILD
-        COMMAND ${CMAKE_COMMAND} -E echo "Installing ${CMAKE_BINARY_DIR}/NukedSC55.clap to ~/Library/Audio/Plug-Ins/CLAP/"
-        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/NukedSC55.clap" "~/Library/Audio/Plug-Ins/CLAP/NukedSC55.clap"
+    add_custom_command(TARGET Nuked-SC55-CLAP POST_BUILD
+        COMMAND ${CMAKE_COMMAND} -E echo "Installing ${CMAKE_BINARY_DIR}/Nuked-SC55.clap to ~/Library/Audio/Plug-Ins/CLAP/"
+        COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/Nuked-SC55.clap" "~/Library/Audio/Plug-Ins/CLAP/Nuked-SC55.clap"
     )
 
     set_property(
-        TARGET NukedSc55Clap
+        TARGET Nuked-SC55-CLAP
         APPEND
-        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/NukedSC55.clap
+        PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/Nuked-SC55.clap
     )
 
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    target_link_libraries(NukedSc55Clap PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plug.version)
-    target_link_libraries(NukedSc55Clap PRIVATE -Wl,-z,defs)
-    set_target_properties(NukedSc55Clap PROPERTIES SUFFIX ".clap" PREFIX "")
+    target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plug.version)
+    target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,-z,defs)
+    set_target_properties(Nuked-SC55-CLAP PROPERTIES SUFFIX ".clap" PREFIX "")
 
 endif ()
 
 
 find_package(SpeexDSP REQUIRED)
 
-target_link_libraries(NukedSc55Clap  PRIVATE Speex::SpeexDSP)
+target_link_libraries(Nuked-SC55-CLAP  PRIVATE Speex::SpeexDSP)
