@@ -1,4 +1,4 @@
-#Nuked SC - 55 CLAP audio plugin
+# Nuked SC-55 CLAP audio plugin
 
 The plugin is built upon [J.C. Moyer's fork](https://github.com/jcmoyer/Nuked-SC55)
 of nukeykt's original [Nuked SC-55](https://github.com/nukeykt/Nuked-SC55)
