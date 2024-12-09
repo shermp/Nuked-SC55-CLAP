@@ -341,7 +341,7 @@ constexpr uint8_t ProgramChange   = 0xc0;
 constexpr uint8_t ChannelPressure = 0xd0;
 constexpr uint8_t PitchBend       = 0xe0;
 
-static const char* status_to_string(const uint8_t status)
+[[maybe_unused]] static const char* status_to_string(const uint8_t status)
 {
     switch (status) {
     case NoteOff: return "NoteOff"; break;
@@ -355,10 +355,9 @@ static const char* status_to_string(const uint8_t status)
     }
 }
 
-static void log_midi_message(const clap_event_midi_t* event)
+[[maybe_unused]] static void log_midi_message(const clap_event_midi_t* event)
 {
-    const auto status  = event->data[0] & 0xf0;
-    const auto channel = event->data[0] & 0x0f;
+    const auto status = event->data[0] & 0xf0;
 
     // 3-byte messages
     switch (status) {
