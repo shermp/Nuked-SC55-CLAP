@@ -29,12 +29,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-latest, macOS-13, windows-2019]
+        os: [ubuntu-22.04, macOS-13, windows-2019]
         include:
           - os: windows-2019
             vcpkgCommitId: '3d89599850c8168fa4b560367b06c1be52645b20'
 
-          - os: ubuntu-latest
+          - os: ubuntu-22.04
             vcpkgCommitId: '3d89599850c8168fa4b560367b06c1be52645b20'
 
           - os: macOS-13
