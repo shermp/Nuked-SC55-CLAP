@@ -13,6 +13,10 @@ set(CMAKE_MODULE_PATH "${CMAKE_SOURCE_DIR}/CMakeModules/")
 
 set(VCPKG_LIBRARY_LINKAGE static)
 
+if (CMAKE_SYSTEM_NAME STREQUAL "Darwin" OR CMAKE_SYSTEM_NAME STREQUAL "Linux")
+   add_compile_options(-Wall -Wextra -Wno-unused-parameter)
+endif ()
+
 include_directories(${CMAKE_CURRENT_SOURCE_DIR}/include)
 
 # TODO
@@ -40,6 +44,9 @@ set_property(
 	PROPERTY ADDITIONAL_CLEAN_FILES ${CMAKE_BINARY_DIR}/Nuked-SC55.clap
 )
 
+#----------------------------------------------------------------------------
+# Windows
+#----------------------------------------------------------------------------
 if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     #    target_link_options(Nuked-SC55-CLAP PRIVATE /EXPORT:clap_entry)
 
@@ -51,6 +58,9 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
     #    /FI ${CMAKE_SOURCE_DIR}/example/config.h
     #)
 
+#----------------------------------------------------------------------------
+# macOS
+#----------------------------------------------------------------------------
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
     add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
 
@@ -78,6 +88,9 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
         COMMAND ${CMAKE_COMMAND} -E copy_directory "${CMAKE_BINARY_DIR}/Nuked-SC55.clap" "~/Library/Audio/Plug-Ins/CLAP/Nuked-SC55.clap"
     )
 
+#----------------------------------------------------------------------------
+# Linux
+#----------------------------------------------------------------------------
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
     add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
 
@@ -89,8 +102,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
 		PREFIX "")
 
     # strip debug info
-    set(CMAKE_EXE_LINKER_FLAGS "-s")
-
+	#set(CMAKE_EXE_LINKER_FLAGS "-s")
 endif ()
 
 

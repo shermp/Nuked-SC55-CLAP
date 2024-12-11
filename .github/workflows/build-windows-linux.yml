@@ -1,9 +1,11 @@
+# Based on the `hosted-ninja-vcpkg.yml` run-cmake example of Luca Cappa
+#
+
 # Copyright (c) 2020-2021-2022-2023 Luca Cappa
 #
 # Released under the term specified in file LICENSE.txt
 # SPDX short identifier: MIT
 #
-
 # The peculiarity of this workflow is that assumes vcpkg is NOT stored as a
 # submodule of this repository.
 #
@@ -18,7 +20,7 @@
 #   a no-op if the dependencies are restored from GH Action cache.
 #
 # - Finally, it builds the sources with Ninja.
-#
+
 name: build
 on: [push, workflow_dispatch]
 
@@ -29,15 +31,12 @@ jobs:
     strategy:
       fail-fast: false
       matrix:
-        os: [ubuntu-22.04, macOS-13, windows-2019]
+        os: [windows-2019, ubuntu-22.04]
         include:
           - os: windows-2019
             vcpkgCommitId: '3d89599850c8168fa4b560367b06c1be52645b20'
 
           - os: ubuntu-22.04
-            vcpkgCommitId: '3d89599850c8168fa4b560367b06c1be52645b20'
-
-          - os: macOS-13
             vcpkgCommitId: '3d89599850c8168fa4b560367b06c1be52645b20'
 
     steps:
@@ -46,6 +45,7 @@ jobs:
           submodules: true
 
       - uses: lukka/get-cmake@latest
+
       - name: Dump the content of $RUNNER_TEMP
         run: find $RUNNER_TEMP
         shell: bash
@@ -76,10 +76,16 @@ jobs:
         uses: lukka/run-cmake@v10
         with:
           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
-          configurePreset: ninja
-          buildPreset: ninja
 
-      - name: List $RUNNER_WORKSPACE after build
+          configurePreset: ninja
+          # used by the Linux build
+          configurePresetAdditionalArgs: "['-DCMAKE_BUILD_TYPE=Release']"
+
+          buildPreset: ninja
+          # used by the Windows build
+          buildPresetAdditionalArgs: "['--config Release']"
+
+      - name: Dump the content of $RUNNER_WORKSPACE after build
         run: find $RUNNER_WORKSPACE
         shell: bash
 

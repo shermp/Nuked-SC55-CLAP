@@ -1,7 +1,7 @@
-#!/bin/sh
+#!/bin/bash
 
-# Build macOS Universal Binary CLAP plugin app bundle.
-# The `Nuked-SC55.clap` bundle will be in the `out` directory.
+# Build macOS universal binary CLAP plugin.
+# The `Nuked-SC55.clap` app bundle will created in the `out` directory.
 #
 # Expects VCPKG_ROOT to be set and vcpkg in the path (see README).
 #
@@ -9,15 +9,15 @@
 rm -rf out
 mkdir out
 
-# Build arm64
+# Build arm64 release version
 rm -rf build
-cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64
+cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 mv build/Nuked-SC55.clap out
 
-# Build x86_64
+# Build x86_64 release version
 rm -rf build
-cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64
+cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_BUILD_TYPE=Release
 cmake --build build
 cp build/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55 out/Nuked-SC55-x86_64
 
@@ -30,3 +30,15 @@ rm out/Nuked-SC55-x86_64
 rm out/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55
 
 mv out/Nuked-SC55 out/Nuked-SC55.clap/Contents/MacOS/
+
+# Verify
+echo
+echo "----------------------------------------------------------------------"
+
+ARCHS=`lipo -archs out/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55`
+
+if [ "$ARCHS" == "x86_64 arm64" ]; then
+	echo "Success! Universal binary app bundle is in 'out/Nuked-SC55.clap'"
+else
+	echo "Oops, something went wrong. Arch of the CLAP plugin is '$ARCHS'"
+fi

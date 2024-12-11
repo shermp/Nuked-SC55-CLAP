@@ -18,7 +18,8 @@ any commercial software package.
 ## Installation
 
 Download the latest version for your operating system from the [releases
-page](https://github.com/johnnovak/Nuked-SC55-CLAP/releases/) page, then unzip it into one of these OS-specific locations:
+page](https://github.com/johnnovak/Nuked-SC55-CLAP/releases/) page, then unzip
+it into one of these OS-specific locations:
 
 - **Windows**
   - `C:\Program Files\Common Files\CLAP\`
@@ -107,13 +108,12 @@ SC-55mk2-v1.01/waverom2.bin      4d91cdeaed048d653dbf846a221003c3a3f08279
 
 #### All platforms
 
-- CMake 3.29+
+- CMake 3.27+
 - vcpkg (latest)
 
 #### Windows
 
 - Visual Studio 2022 17.11.4+
-
 
 #### macOS & Linux
 
@@ -141,20 +141,17 @@ enviroment variable accordingly.
 
 #### Windows
 
-First you need to configure the project:
+First you'll need to configure the project:
 
     cmake -G "Visual Studio 17 2022" --preset=ninja
 
-To build the **debug artifacts** (this will create the 'Nuked-SC55.clap`
-plugin in `build\Debug`):
-
-    cmake --build build --config Debug
-
-Or just:
+Use either command to build the **debug artifact** (this will create the
+`Nuked-SC55.clap` plugin in `build\Debug`):
 
     cmake --build build
+    cmake --build build --config Debug
 
-To build the **release artifacts** (this will create the 'Nuked-SC55.clap`
+To build the **release artifacts** (this will create the `Nuked-SC55.clap`
 plugin in `build\Release`):
 
     cmake --build build --config Release
@@ -162,17 +159,23 @@ plugin in `build\Release`):
 
 #### macOS
 
-Run `build-macos.sh` to build the universal binary app bundle in the `out`
-directory, or follow the below manual steps.
+Run `build-macos.sh` to create the universal binary app bundle in the `out`
+directory. Alternatively, follow the below manual steps:
 
-First you need to configure the project:
+First you'll need to configure the project. Use either command to configure the
+**debug build**:
 
     cmake --preset=ninja
+    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Debug
 
-Use these invocations if you want to cross-compile:
+To configure the **release build**:
 
-    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64
-    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64
+    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Release
+
+Set `CMAKE_OSX_ARCHITECTURES` as well if you want to cross-compile, e.g.:
+
+    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64  -DCMAKE_BUILD_TYPE=Release
+    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_BUILD_TYPE=Release
 
 To build the project:
 
@@ -183,13 +186,21 @@ This will create the `Nuked-SC55.clap` app bundle in the `build` directory.
 
 #### Linux
 
-First you need to configure the project:
+First you'll need to configure the project. Use either command configure the
+**debug build**:
 
     cmake --preset=ninja
+    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Debug
 
-To build the project (the output will be in the `build` directory):
+To configure the **release artifacts**:
+
+    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Release
+
+To build the project:
 
     cmake --build build
+
+This will create the `Nuked-SC55.clap` plugin in the `build` directory.
 
 
 ### Clean the project directory
