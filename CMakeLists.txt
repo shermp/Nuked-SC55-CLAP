@@ -92,7 +92,7 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 # Linux
 #----------------------------------------------------------------------------
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
+    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter)
 
     target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plugin.version)
     target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,-z,defs)

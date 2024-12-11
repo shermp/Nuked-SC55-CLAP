@@ -77,11 +77,11 @@ jobs:
         with:
           cmakeListsTxtPath: '${{ github.workspace }}/CMakeLists.txt'
 
-          configurePreset: ninja
+          configurePreset: optimised
           # used by the Linux build
           configurePresetAdditionalArgs: "['-DCMAKE_BUILD_TYPE=Release']"
 
-          buildPreset: ninja
+          buildPreset: optimised
           # used by the Windows build
           buildPresetAdditionalArgs: "['--config Release']"
 
@@ -93,4 +93,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Nuked-SC55-CLAP-${{ matrix.os }}
-          path: build/Nuked-SC55.clap
+          path: build/optimised/Nuked-SC55.clap
