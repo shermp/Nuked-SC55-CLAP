@@ -151,7 +151,7 @@ Use either command to build the **debug artifact** (this will create the
     cmake --build build
     cmake --build build --config Debug
 
-To build the **release artifacts** (this will create the `Nuked-SC55.clap`
+To build the **release artifact** (this will create the `Nuked-SC55.clap`
 plugin in `build\Release`):
 
     cmake --build build --config Release
@@ -192,7 +192,7 @@ First you'll need to configure the project. Use either command configure the
     cmake --preset=ninja
     cmake --preset=ninja -DCMAKE_BUILD_TYPE=Debug
 
-To configure the **release artifacts**:
+To configure the **release build**:
 
     cmake --preset=ninja -DCMAKE_BUILD_TYPE=Release
 
