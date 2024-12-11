@@ -75,11 +75,11 @@ Here is the list of required files for each supported model and their SHA256
 hashes. Lookup is performed by filename, so make sure the names match exactly.
 
 ```
-SC-55-v2.00/sc55_rom1.bin        76f646bc03f66dbee7606f2181d4ea76f05ece7d
-SC-55-v2.00/sc55_rom2.bin        6d6346b35c2379e9e6adc182214580e3d164b0c7
-SC-55-v2.00/sc55_waverom1.bin    8cc3c0d7ec0993df81d4ca1970e01a4b0d8d3775
-SC-55-v2.00/sc55_waverom2.bin    80e6eb130c18c09955551563f78906163c55cc11
-SC-55-v2.00/sc55_waverom3.bin    7454b817778179806f3f9d1985b3a2ef67ace76f
+SC-55-v1.20/sc55_rom1.bin        dd01ec54027751c2f2f2e47bbb7a0bf3d1ca8ae2
+SC-55-v1.20/sc55_rom2.bin        ffa8e3d5b3ec45485de4c13029bb4406c08ac9c3
+SC-55-v1.20/sc55_waverom1.bin    8cc3c0d7ec0993df81d4ca1970e01a4b0d8d3775
+SC-55-v1.20/sc55_waverom2.bin    80e6eb130c18c09955551563f78906163c55cc11
+SC-55-v1.20/sc55_waverom3.bin    7454b817778179806f3f9d1985b3a2ef67ace76f
 
 SC-55-v1.21/sc55_rom1.bin        dd01ec54027751c2f2f2e47bbb7a0bf3d1ca8ae2
 SC-55-v1.21/sc55_rom2.bin        9c17f85e784dc1549ac1f98d457b353393331f6b
