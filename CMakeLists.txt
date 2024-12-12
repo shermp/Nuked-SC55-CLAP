@@ -62,8 +62,6 @@ if (CMAKE_SYSTEM_NAME STREQUAL "Windows")
 # macOS
 #----------------------------------------------------------------------------
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
-    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
-
     set_target_properties(Nuked-SC55-CLAP PROPERTIES
         BUNDLE ON
         BUNDLE_EXTENSION clap
@@ -92,8 +90,6 @@ elseif (CMAKE_SYSTEM_NAME STREQUAL "Darwin")
 # Linux
 #----------------------------------------------------------------------------
 elseif (CMAKE_SYSTEM_NAME STREQUAL "Linux")
-    add_compile_options(-g -Wall -Wextra -Wno-unused-parameter -O3)
-
     target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,--version-script=${CMAKE_SOURCE_DIR}/resources/linux/plugin.version)
     target_link_libraries(Nuked-SC55-CLAP PRIVATE -Wl,-z,defs)
 
