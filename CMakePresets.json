@@ -8,12 +8,76 @@
       "cacheVariables": {
         "CMAKE_TOOLCHAIN_FILE": "$env{VCPKG_ROOT}/scripts/buildsystems/vcpkg.cmake"
       }
+    },
+    {
+      "name": "optimised",
+      "inherits": "ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release",
+        "CMAKE_OPTIMIZE_DEPENDENCIES": "ON",
+        "CMAKE_INTERPROCEDURAL_OPTIMIZATION": "ON",
+        "CMAKE_UNITY_BUILD": "ON",
+        "CMAKE_VISIBILITY_INLINES_HIDDEN": "ON",
+        "CMAKE_CXX_VISIBILITY_PRESET": "hidden",
+        "CMAKE_TRY_COMPILE_CONFIGURATION": "Release"
+      }
+    },
+    {
+      "name": "msvc-sanitised",
+      "inherits": "ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_MSVC_RUNTIME_LIBRARY": "MultiThreadedDebug",
+        "CMAKE_CXX_FLAGS_DEBUG": "/Zi /Od /RTC1 /MDd /D_DEBUG /DDEBUG /guard:cf /sdl /analyze /fsanitize=address /JMC /external:anglebrackets /external:W0 /permissive- /W4 /w14640",
+        "CMAKE_EXE_LINKER_FLAGS": "/DEBUG:FULL /INCREMENTAL"
+      }
+    },
+    {
+      "name": "gcc-sanitised",
+      "inherits": "ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS_DEBUG": "-g -O0 -fno-inline -fno-omit-frame-pointer -fstack-protector-strong -D_FORTIFY_SOURCE=3 -D_GLIBCXX_ASSERTIONS=1 -D_GLIBCXX_DEBUG=1 -D_GLIBCXX_DEBUG_PEDANTIC=1 -D_GLIBCXX_SANITIZE_VECTOR=1 -D_LIBCPP_DEBUG=1 -D_LIBCPP_ENABLE_THREAD_SAFETY_ANNOTATIONS=1 -D_LIBCPP_ENABLE_HARDENED_MODE=1 -fsanitize=address,undefined -fsanitize-address-use-after-scope -fno-sanitize-recover=all",
+        "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=gold -fsanitize=address,undefined",
+        "CMAKE_CXX_COMPILER": "g++"
+      }
+    },
+    {
+      "name": "clang-sanitised",
+      "inherits": "ninja",
+      "binaryDir": "${sourceDir}/build/${presetName}",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug",
+        "CMAKE_CXX_FLAGS_DEBUG": "-g -O0 -fno-inline -fno-omit-frame-pointer -fstack-protector-strong -D_LIBCPP_DEBUG=1 -D_LIBCPP_ENABLE_THREAD_SAFETY_ANNOTATIONS=1 -D_LIBCPP_ENABLE_HARDENED_MODE=1 -fsanitize=address,undefined -fsanitize-address-use-after-scope -fno-sanitize-recover=all",
+        "CMAKE_EXE_LINKER_FLAGS": "-fuse-ld=lld -fsanitize=address,undefined",
+        "CMAKE_CXX_COMPILER": "clang++",
+        "CMAKE_LINKER": "lld"
+      }
     }
   ],
   "buildPresets": [
     {
       "name": "ninja",
       "configurePreset": "ninja"
+    },
+    {
+      "name": "optimised",
+      "configurePreset": "optimised"
+    },
+    {
+      "name": "msvc-sanitised",
+      "configurePreset": "msvc-sanitised"
+    },
+    {
+      "name": "gcc-sanitised",
+      "configurePreset": "gcc-sanitised"
+    },
+    {
+      "name": "clang-sanitised",
+      "configurePreset": "clang-sanitised"
     }
   ]
 }
