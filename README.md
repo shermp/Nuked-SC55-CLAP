@@ -156,6 +156,10 @@ plugin in `build\Release`):
 
     cmake --build build --config Release
 
+The following presets are also available:
+
+    msvc-sanitizer
+
 
 #### macOS
 
@@ -163,55 +167,56 @@ Run `build-macos.sh` to create the universal binary app bundle in the `out`
 directory. Alternatively, follow the below manual steps:
 
 First you'll need to configure the project. Use either command to configure the
-**debug build**:
+debug or release build:
 
-    cmake --preset=ninja
-    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Debug
-
-To configure the **release build**:
-
-    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Release
+    cmake --preset=debug
+    cmake --preset=release
 
 Set `CMAKE_OSX_ARCHITECTURES` as well if you want to cross-compile, e.g.:
 
-    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64  -DCMAKE_BUILD_TYPE=Release
-    cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_BUILD_TYPE=Release
+    cmake --preset=release -DCMAKE_OSX_ARCHITECTURES=arm64
+    cmake --preset=release -DCMAKE_OSX_ARCHITECTURES=x86_64
 
-To build the project:
+To build the project (use the same preset):
 
-    cmake --build build
+    cmake --build build --preset=release
 
 This will create the `Nuked-SC55.clap` app bundle in the `build` directory.
+
+The following presets are also available:
+
+    clang-sanitizer
 
 
 #### Linux
 
-First you'll need to configure the project. Use either command configure the
-**debug build**:
+First you'll need to configure the project. Use either command to configure the
+debug or release build:
 
-    cmake --preset=ninja
-    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Debug
+    cmake --preset=debug
+    cmake --preset=release
 
-To configure the **release build**:
+To build the project (use the same preset):
 
-    cmake --preset=ninja -DCMAKE_BUILD_TYPE=Release
-
-To build the project:
-
-    cmake --build build
+    cmake --build build --preset=release
 
 This will create the `Nuked-SC55.clap` plugin in the `build` directory.
+
+The following presets are also available:
+
+    gcc-sanitizer
+    clang-sanitizer
 
 
 ### Clean the project directory
 
 To clean the `build` directory:
 
-    cmake --build build --target clean
+    cmake --build build --preset=release --target clean
 
 Clean for a specific config:
 
-    cmake --build build --config Release --target clean
+    cmake --build build --preset=release --config Release --target clean
 
 To start from scratch, delete the `build` directory and run the configure
 command again.

@@ -11,15 +11,15 @@ mkdir out
 
 # Build arm64 release version
 rm -rf build
-cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=arm64 -DCMAKE_BUILD_TYPE=Release
-cmake --build build
-mv build/Nuked-SC55.clap out
+cmake --preset=release -DCMAKE_OSX_ARCHITECTURES=arm64
+cmake --build build --preset=release
+mv build/release/Nuked-SC55.clap out
 
 # Build x86_64 release version
 rm -rf build
-cmake --preset=ninja -DCMAKE_OSX_ARCHITECTURES=x86_64 -DCMAKE_BUILD_TYPE=Release
-cmake --build build
-cp build/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55 out/Nuked-SC55-x86_64
+cmake --preset=release -DCMAKE_OSX_ARCHITECTURES=x86_64
+cmake --build build --preset=release
+cp build/release/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55 out/Nuked-SC55-x86_64
 
 # Create universal binary
 lipo out/Nuked-SC55-x86_64 \
