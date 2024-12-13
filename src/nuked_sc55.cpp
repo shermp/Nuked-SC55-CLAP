@@ -279,13 +279,19 @@ clap_process_status NukedSc55::Process(const clap_process_t* process)
         ResampleAndPublishFrames(num_frames, out_left, out_right);
 
     } else {
+	assert(out_left && out_right);
+
+	assert(render_buf.size() == 2);
+	assert(render_buf[0].size() >= num_frames);
+	assert(render_buf[1].size() >= num_frames);
+
         for (size_t i = 0; i < num_frames; ++i) {
             out_left[i]  = render_buf[0][i];
             out_right[i] = render_buf[1][i];
-
-            render_buf[0].clear();
-            render_buf[1].clear();
         }
+
+        render_buf[0].clear();
+        render_buf[1].clear();
     }
 
     return CLAP_PROCESS_CONTINUE;
