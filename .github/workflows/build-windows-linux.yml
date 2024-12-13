@@ -90,4 +90,4 @@ jobs:
         uses: actions/upload-artifact@v4
         with:
           name: Nuked-SC55-CLAP-${{ matrix.os }}
-          path: build/optimised/Nuked-SC55.clap
+          path: build/release/Nuked-SC55.clap
