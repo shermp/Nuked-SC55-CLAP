@@ -156,9 +156,7 @@ plugin in `build\Release`):
 
     cmake --build build --config Release
 
-The following presets are also available:
-
-    msvc-sanitizer
+The `msvc-sanitizer` preset is also available for debugging.
 
 
 #### macOS
@@ -183,9 +181,7 @@ To build the project (use the same preset):
 
 This will create the `Nuked-SC55.clap` app bundle in the `build` directory.
 
-The following presets are also available:
-
-    clang-sanitizer
+The `clang-sanitizer` preset is also available for debugging.
 
 
 #### Linux
@@ -202,10 +198,10 @@ To build the project (use the same preset):
 
 This will create the `Nuked-SC55.clap` plugin in the `build` directory.
 
-The following presets are also available:
+The following presets are also available for debugging:
 
-    gcc-sanitizer
-    clang-sanitizer
+- `gcc-sanitizer`
+- `clang-sanitizer`
 
 
 ### Clean the project directory
@@ -214,7 +210,7 @@ To clean the `build` directory:
 
     cmake --build build --preset=release --target clean
 
-Clean for a specific config:
+Clean for a specific config (for MSVC):
 
     cmake --build build --preset=release --config Release --target clean
 
