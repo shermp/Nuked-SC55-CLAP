@@ -104,6 +104,13 @@ SC-55mk2-v1.01/waverom2.bin      4d91cdeaed048d653dbf846a221003c3a3f08279
 
 ## Building
 
+The official build method is via CMake and vcpkg (this is what the CI workflow
+uses).
+
+Alternatively, you can use [Meson](#Meson-alternative-build-method), but that
+build method is less frequently tested.
+
+
 ### Prerequisites
 
 #### All platforms
@@ -216,6 +223,30 @@ Clean for a specific config (for MSVC):
 
 To start from scratch, delete the `build` directory and run the configure
 command again.
+
+
+### Meson (alternative build method)
+
+Release build using statically-linking SpeexDSP (for portable releases):
+
+    meson setup --prefer-static build/release
+    ninja -C build/release
+
+Release build using dynamically-linked system SpeexDSP (might break on other
+people's systems):
+
+    meson setup build/release
+    ninja -C build/release
+
+Debug build:
+
+    meson setup --buildtype=debug build/debug
+    ninja -C build/debug
+
+Sanitizer build:
+
+    meson setup --buildtype=debug -Db_sanitize=address,undefined build/sanitizer
+    ninja -C build/sanitizer
 
 
 ## License
