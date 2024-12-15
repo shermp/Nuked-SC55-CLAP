@@ -227,7 +227,7 @@ command again.
 
 ### Meson (alternative build method)
 
-Release build using statically-linking SpeexDSP (for portable releases):
+Release build using statically-linked SpeexDSP (for portable releases):
 
     meson setup --prefer-static build/release
     ninja -C build/release
