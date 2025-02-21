@@ -150,7 +150,7 @@ enviroment variable accordingly.
 
 First you'll need to configure the project:
 
-    cmake -G "Visual Studio 17 2022" --preset=ninja
+    cmake -DVCPKG_TARGET_TRIPLET=x64-windows-static-md -G "Visual Studio 17 2022" --preset=ninja
 
 Use either command to build the **debug artifact** (this will create the
 `Nuked-SC55.clap` plugin in `build\Debug`):
