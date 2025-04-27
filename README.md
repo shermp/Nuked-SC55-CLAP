@@ -34,6 +34,19 @@ it into one of these OS-specific locations:
   - `$HOME/.clap/`
 
 
+### macOS Gatekeeper
+
+
+If macOS Gatekeeper doesn't let you open the plugin, you'll need to explicitly
+whitelist it with the following command from the terminal (replace `<path-to>`
+with the actual path to `Nuked-SC55.clap`):
+
+
+```bash
+sudo xattr -rd com.apple.quarantine <path-to>/Nuked-SC55.clap
+```
+
+
 ### ROM files
 
 The emulation needs dumps of the ROM chips of the original hardware to
