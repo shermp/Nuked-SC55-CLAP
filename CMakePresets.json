@@ -89,6 +89,22 @@
       }
     },
     {
+      "name": "debug-linux-arm64",
+      "inherits": [ "base" ],
+      "description": "Linux arm64 debug",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Debug"
+      }
+    },
+    {
+      "name": "release-linux-arm64",
+      "inherits": [ "base" ],
+      "description": "Linux arm64 release",
+      "cacheVariables": {
+        "CMAKE_BUILD_TYPE": "Release"
+      }
+    },
+    {
       "name": "debug-macos-arm64",
       "inherits": [ "base" ],
       "description": "macOS ARM64 debug",
@@ -186,6 +202,14 @@
     {
       "name": "release-linux-x64",
       "configurePreset": "release-linux-x64"
+    },
+    {
+      "name": "debug-linux-arm64",
+      "configurePreset": "debug-linux-arm64"
+    },
+    {
+      "name": "release-linux-arm64",
+      "configurePreset": "release-linux-arm64"
     },
     {
       "name": "debug-macos-arm64",

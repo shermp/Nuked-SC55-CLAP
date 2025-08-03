@@ -31,6 +31,12 @@ jobs:
             triplet: x64-linux
             build_type: release
 
+          - os: ubuntu-22.04-arm
+            label: linux
+            arch: arm64
+            triplet: arm64-linux
+            build_type: release
+
           - os: macos-14
             label: macos
             arch: arm64
