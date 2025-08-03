@@ -11,14 +11,14 @@ mkdir -p out
 rm -rf build
 
 # Build arm64 release version
-cmake --preset macos-arm64-release
-cmake --build build --preset macos-arm64-release
-mv -f build/macos-arm64-release/Nuked-SC55.clap/ out/.
+cmake --preset release-macos-arm64
+cmake --build build --preset release-macos-arm64
+mv -f build/release-macos-arm64/Nuked-SC55.clap/ out/.
 
 # Build x86_64 release version
-cmake --preset macos-x64-release
-cmake --build build --preset macos-x64-release
-cp -f build/macos-x64-release/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55 out/Nuked-SC55-x86_64
+cmake --preset release-macos-x64
+cmake --build build --preset release-macos-x64
+cp -f build/release-macos-x64/Nuked-SC55.clap/Contents/MacOS/Nuked-SC55 out/Nuked-SC55-x86_64
 
 # Create universal binary
 lipo out/Nuked-SC55-x86_64 \
