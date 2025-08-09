@@ -545,7 +545,7 @@ bool DetectRomsetsByHash(const std::filesystem::path& base_path,
 
     if (ec)
     {
-        fprintf(stderr, "Failed to walk rom directory: %s\n", ec.message().c_str());
+//        fprintf(stderr, "Failed to walk rom directory: %s\n", ec.message().c_str());
         return false;
     }
 
@@ -556,10 +556,10 @@ bool DetectRomsetsByHash(const std::filesystem::path& base_path,
         const bool is_file = dir_iter->is_regular_file(ec);
         if (ec)
         {
-            fprintf(stderr,
-                    "Failed to check file type of `%s`: %s\n",
-                    dir_iter->path().generic_string().c_str(),
-                    ec.message().c_str());
+//            fprintf(stderr,
+//                    "Failed to check file type of `%s`: %s\n",
+//                    dir_iter->path().generic_string().c_str(),
+//                    ec.message().c_str());
             return false;
         }
 
@@ -568,7 +568,7 @@ bool DetectRomsetsByHash(const std::filesystem::path& base_path,
             dir_iter.increment(ec);
             if (ec)
             {
-                fprintf(stderr, "Failed to get next file: %s\n", ec.message().c_str());
+//                fprintf(stderr, "Failed to get next file: %s\n", ec.message().c_str());
                 return false;
             }
             continue;
@@ -577,10 +577,10 @@ bool DetectRomsetsByHash(const std::filesystem::path& base_path,
         const uintmax_t file_size = dir_iter->file_size(ec);
         if (ec)
         {
-            fprintf(stderr,
-                    "Failed to get file size of `%s`: %s\n",
-                    dir_iter->path().generic_string().c_str(),
-                    ec.message().c_str());
+//            printf(stderr,
+//                    "Failed to get file size of `%s`: %s\n",
+//                    dir_iter->path().generic_string().c_str(),
+//                    ec.message().c_str());
             return false;
         }
 
@@ -590,7 +590,7 @@ bool DetectRomsetsByHash(const std::filesystem::path& base_path,
             dir_iter.increment(ec);
             if (ec)
             {
-                fprintf(stderr, "Failed to get next file: %s\n", ec.message().c_str());
+//                fprintf(stderr, "Failed to get next file: %s\n", ec.message().c_str());
                 return false;
             }
             continue;
@@ -631,7 +631,7 @@ bool DetectRomsetsByHash(const std::filesystem::path& base_path,
         dir_iter.increment(ec);
         if (ec)
         {
-            fprintf(stderr, "Failed to get next file: %s\n", ec.message().c_str());
+//            fprintf(stderr, "Failed to get next file: %s\n", ec.message().c_str());
             return false;
         }
     }
