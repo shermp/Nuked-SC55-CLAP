@@ -2,6 +2,8 @@
 
 The Nuked SC-55 CLAP audio plug-in ([CLAP](https://cleveraudio.org/)) is built upon [J.C. Moyer's fork](https://github.com/jcmoyer/Nuked-SC55) of nukeykt's original [Nuked SC-55](https://github.com/nukeykt/Nuked-SC55) project.
 
+Contrary to the original Nuked-SC55 this plugin is based on, Nuked SC-55 CLAP has no graphical user interface. The plugin only reacts to MIDI messages, just like an external MIDI module without a display (e.g., the [Roland SC-55ST](https://www.synthark.org/Roland/SC-55ST.html)). Future versions might include the emulation of the original hardware's LCD display or even a full custom GUI.
+
 The plug-in aims to preserve an important part of DOS gaming history for all to freely enjoy for posterity. It is only intended for **personal use** (e.g., retro gaming or writing music as a hobby) and **research purposes**. See the [License](#license) section for additional details.
 
 ## Installation
