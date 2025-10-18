@@ -57,6 +57,7 @@ private:
     double resample_ratio          = 0.0f;
 
     // Methods
+    std::filesystem::path GetRomEnvDir();
     std::filesystem::path GetRomBasePath();
 
     void ProcessEvent(const clap_event_header_t* event);

@@ -4,8 +4,17 @@
 #include <cstdlib>
 #include <string>
 
+#ifdef _WIN32
+#ifndef WIN32_LEAN_AND_MEAN
+#define WIN32_LEAN_AND_MEAN
+#include <windows.h>
+#endif
+#endif
+
 #include "nuked_sc55.h"
 #include "nuked-sc55/common/rom_loader.h"
+
+static std::string get_env_var(const char* var_name);
 
 // #define DEBUG
 
@@ -49,7 +58,31 @@ static void log_shutdown() {}
     #define log(...)
 #endif
 
+
+
 //----------------------------------------------------------------------------
+
+// Get the environment variable value from the provided name, 
+// if the variable exists. Returns an empty string if the 
+// variable does not exist, or is empty
+static std::string get_env_var(const char* var_name)
+{
+    std::string env_var = {};
+#ifdef _WIN32
+    auto size = GetEnvironmentVariableA(var_name, nullptr, 0);
+    if (size > 0) {
+        // Note, 'size' includes the null terminator
+        env_var.resize(size - 1);
+        GetEnvironmentVariableA(var_name, env_var.data(), size);
+    }
+#else
+    const char* env_var_c_str = getenv(var_name);
+    if (env_var_c_str) {
+        env_var = env_var_c_str;
+    }
+#endif
+    return env_var;
+}
 
 extern std::string plugin_path;
 
@@ -74,8 +107,43 @@ const clap_plugin_t* NukedSc55::GetPluginClass()
     return &plugin_class;
 }
 
+// Get the ROM directory from an environment variable if set to a non-empty
+// value. The path must be an absolute directory path
+std::filesystem::path NukedSc55::GetRomEnvDir()
+{
+    constexpr char env_rom_dir_name[] = "SOUNDCANVAS_ROM_DIR";
+    std::filesystem::path empty_path = {};
+
+    std::string dir_name = get_env_var(env_rom_dir_name);
+
+    if (dir_name.empty()) {
+        return empty_path;
+    }
+
+    std::filesystem::path env_path(dir_name);
+
+    if (env_path.is_relative()) {
+        return empty_path;
+    }
+    
+    std::error_code ec;
+    if (!std::filesystem::is_directory(env_path, ec)) {
+        if (ec) {
+            log("Error getting directory status: %s", ec.message().c_str());
+        }
+        return empty_path;
+    }
+    return env_path;
+}
+
 std::filesystem::path NukedSc55::GetRomBasePath()
 {
+    auto env_rom_dir = GetRomEnvDir();
+    if (!env_rom_dir.empty()) {
+        log("ROM base path from environment: %s", env_rom_dir.c_str());
+        return env_rom_dir;
+    }
+
     const char* rom_dir = "ROMs";
 
 #ifdef __APPLE__
