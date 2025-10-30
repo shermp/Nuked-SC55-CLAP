@@ -120,7 +120,7 @@ const clap_plugin_t* NukedSc55::GetPluginClass()
 // Entries must be separated by the OS PATH separator
 std::vector<std::filesystem::path> NukedSc55::GetRomEnvDirs()
 {
-    constexpr char env_rom_dir_name[] = "SOUNDCANVAS_ROM_DIR";
+    constexpr char env_rom_dir_name[] = "SOUNDCANVAS_ROM_PATH";
     std::vector<std::filesystem::path> paths = {};
     const auto env_dir_list = get_env_var(env_rom_dir_name);
     if (env_dir_list.empty()) {
