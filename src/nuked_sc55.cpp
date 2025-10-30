@@ -2,7 +2,9 @@
 #include <cmath>
 #include <cstdio>
 #include <cstdlib>
+#include <ranges>
 #include <string>
+#include <string_view>
 
 #ifdef _WIN32
 #ifndef WIN32_LEAN_AND_MEAN
@@ -84,6 +86,12 @@ static std::string get_env_var(const char* var_name)
     return env_var;
 }
 
+#ifdef _WIN32
+    constexpr auto PathSeparator = std::string_view(";");
+#else
+    constexpr auto PathSeparator = std::string_view(":");
+#endif
+
 extern std::string plugin_path;
 
 NukedSc55::NukedSc55(const clap_plugin_t _plugin_class,
@@ -92,7 +100,7 @@ NukedSc55::NukedSc55(const clap_plugin_t _plugin_class,
     log_init();
 
     path = plugin_path;
-    log("Plugin path: %s", path.c_str());
+    log("Plugin path: %s", path.string().c_str());
 
     plugin_class = _plugin_class;
 
@@ -107,62 +115,50 @@ const clap_plugin_t* NukedSc55::GetPluginClass()
     return &plugin_class;
 }
 
-// Get the ROM directory from an environment variable if set to a non-empty
-// value. The path must be an absolute directory path
-std::filesystem::path NukedSc55::GetRomEnvDir()
+// Get a list of potential ROM directories from an environment variable 
+// if it is set to a non-empty value. The paths must be absolute directory paths.
+// Entries must be separated by the OS PATH separator
+std::vector<std::filesystem::path> NukedSc55::GetRomEnvDirs()
 {
     constexpr char env_rom_dir_name[] = "SOUNDCANVAS_ROM_DIR";
-    std::filesystem::path empty_path = {};
-
-    std::string dir_name = get_env_var(env_rom_dir_name);
-
-    if (dir_name.empty()) {
-        return empty_path;
+    std::vector<std::filesystem::path> paths = {};
+    const auto env_dir_list = get_env_var(env_rom_dir_name);
+    if (env_dir_list.empty()) {
+        return paths;
     }
-
-    std::filesystem::path env_path(dir_name);
-
-    if (env_path.is_relative()) {
-        return empty_path;
-    }
-    
-    std::error_code ec;
-    if (!std::filesystem::is_directory(env_path, ec)) {
-        if (ec) {
-            log("Error getting directory status: %s", ec.message().c_str());
+    for (const auto env_dir : std::views::split(env_dir_list, PathSeparator)) {
+        auto dir = std::filesystem::path(std::string(env_dir.data(), env_dir.size()));
+        if (dir.is_relative()) {
+            log("Error: path is relative: %s", dir.string().c_str());
+            continue;
         }
-        return empty_path;
+        std::error_code ec;
+        if (!std::filesystem::is_directory(dir, ec)) {
+            if (ec) {
+                log("Error getting directory status: %s", ec.message().c_str());
+            }
+            continue;
+        }
+        paths.push_back(dir);
     }
-    return env_path;
+    return paths;
 }
 
-std::filesystem::path NukedSc55::GetRomBasePath()
+std::vector<std::filesystem::path> NukedSc55::GetRomBasePaths()
 {
-    auto env_rom_dir = GetRomEnvDir();
-    if (!env_rom_dir.empty()) {
-        log("ROM base path from environment: %s", env_rom_dir.c_str());
-        return env_rom_dir;
-    }
+    auto paths = GetRomEnvDirs();
 
-    const char* rom_dir = "ROMs";
+    const char* default_rom_dir = "ROMs";
 
-#ifdef __APPLE__
     // Try the Resources folder inside the application bundle first on macOS
-    const auto bundle_rom_path = path / "Resources" / rom_dir;
-
-    if (std::filesystem::exists(bundle_rom_path)) {
-        log("Found ROM directory within application bundle, ROM base path: %s",
-            bundle_rom_path.c_str());
-
-        return bundle_rom_path;
-    }
+#ifdef __APPLE__
+    paths.push_back(path / "Resources" / default_rom_dir);
 #endif
+
     const char* resources_dir = "Nuked-SC55-Resources";
+    paths.push_back(path.parent_path() / resources_dir / default_rom_dir);
 
-    const auto rom_path = path.parent_path() / resources_dir / rom_dir;
-    log("ROM base path: %s", rom_path.c_str());
-
-    return rom_path;
+    return paths;
 }
 
 bool NukedSc55::Init(const clap_plugin* _plugin_instance)
@@ -180,40 +176,43 @@ bool NukedSc55::Init(const clap_plugin* _plugin_instance)
         return false;
     }
 
-    auto rom_path = GetRomBasePath();
-    auto romset   = "mk1";
+    auto rom_paths = GetRomBasePaths();
+    for (auto rom_path : rom_paths) {
+        auto romset   = "mk1";
 
-    switch (model) {
-    case Model::Sc55_v1_00: rom_path /= "SC-55-v1.00"; break;
-    case Model::Sc55_v1_20: rom_path /= "SC-55-v1.20"; break;
-    case Model::Sc55_v1_21: rom_path /= "SC-55-v1.21"; break;
-    case Model::Sc55_v2_00: rom_path /= "SC-55-v2.00"; break;
-    case Model::Sc55mk2_v1_01:
-        romset = "mk2";
-        rom_path /= "SC-55mk2-v1.01";
-        break;
-    default: assert(false);
-    }
+        switch (model) {
+        case Model::Sc55_v1_00: rom_path /= "SC-55-v1.00"; break;
+        case Model::Sc55_v1_20: rom_path /= "SC-55-v1.20"; break;
+        case Model::Sc55_v1_21: rom_path /= "SC-55-v1.21"; break;
+        case Model::Sc55_v2_00: rom_path /= "SC-55-v2.00"; break;
+        case Model::Sc55mk2_v1_01:
+            romset = "mk2";
+            rom_path /= "SC-55mk2-v1.01";
+            break;
+        default: assert(false);
+        }
 
-    log("ROM dir: %s", rom_path.c_str());
+        log("Trying ROM dir: %s", rom_path.string().c_str());
 
-    AllRomsetInfo romset_info{};
-    common::LoadRomsetResult load_result{};
-    common::RomOverrides rom_overrides;
-    common::LoadRomsetError err = common::LoadRomset(romset_info, rom_path, romset, false, rom_overrides, load_result);
-    if (err != common::LoadRomsetError{}) {
-        log("emu->LoadRomset failed");
-        emu.reset(nullptr);
-        return false;
-    }
-    RomLocationSet loaded{};
-    if (!emu->LoadRoms(load_result.romset, romset_info, &loaded)) {
-        log("emu->LoadRoms failed");
-        emu.reset(nullptr);
-        return false;
-    }
-
-    return true;
+        AllRomsetInfo romset_info = {};
+        common::LoadRomsetResult load_result = {};
+        common::RomOverrides rom_overrides;
+        common::LoadRomsetError err = common::LoadRomset(romset_info, rom_path, romset, false, rom_overrides, load_result);
+        if (err != common::LoadRomsetError{}) {
+            log("emu->LoadRomset failed. Trying next directory");
+            continue;
+        }
+        RomLocationSet loaded = {};
+        if (!emu->LoadRoms(load_result.romset, romset_info, &loaded)) {
+            log("emu->LoadRoms failed");
+            emu.reset(nullptr);
+            return false;
+        }
+        return true;
+        }
+    log("Init failed, tried all ROM directories");
+    emu.reset(nullptr);
+    return false;
 }
 
 void NukedSc55::Shutdown()
