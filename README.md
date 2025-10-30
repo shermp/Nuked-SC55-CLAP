@@ -66,16 +66,22 @@ Nuked-SC55-Resources
 
 On macOS, you can also put the `ROMs` folder in the `Resources` folder inside the `Nuked-SC55.clap` application bundle.
 
-As an alternative to creating the `Nuked-SC55-Resources` directory in the plugin location, you may set the `SOUNDCANVAS_ROM_DIR` environment variable to the absolute directory of where the ROM directories can be found. Eg:
+As an alternative to creating the `Nuked-SC55-Resources` directory in the plugin location, you may set the `SOUNDCANVAS_ROM_DIR` environment variable to a list of absolute directories of where to look for ROM's. The OS PATH separator is used as a list delimiter Eg:
 
 ```pwsh
 $Env:SOUNDCANVAS_ROM_DIR = "C:\path\to\ROM\dir"
+```
+```pwsh
+$Env:SOUNDCANVAS_ROM_DIR = "C:\path\to\ROM\dir;Z:\alt\path\to\dir"
 ```
 
 or
 
 ```sh
 export SOUNDCANVAS_ROM_DIR=/path/to/ROM/dir
+```
+```sh
+export SOUNDCANVAS_ROM_DIR=/path/to/ROM/dir:/alt/path/to/rom/dir
 ```
 
 Here is the list of required files for each supported model and their SHA1 hashes. Lookup is performed by filename, so make sure the names match exactly.
